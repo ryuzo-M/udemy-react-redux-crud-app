@@ -1,58 +1,40 @@
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
 
-function createGenStr(gen) {
-  // console.log('start create generation string.');
-  if (gen !== undefined) {
-    // console.log('clear to check generation property.');
-    // console.log('generation number : ', gen);
-    if (gen === 1) {
-      return gen + "st";
-    } else if (gen === 2) {
-      return gen + "nd";
-    } else if (gen === 3) {
-      return gen + "rd";
-    } else {
-      return gen + "th";
-    }
+class Counter extends Component {
+  constructor(props) {
+    super(props)
+    console.log(this.state)
+    this.state = { count: 0 }
+    console.log(this.state)
   }
-}
 
-function Members(props) {
-  return <div>Hi, I'm {props.name}. {createGenStr(props.gen)} generation member.</div>
-}
+  handlePlus = () => {
+    console.log("current counter= ", this.state.count);
+    const currentCount = this.state.count;
+    this.setState({count: currentCount + 1 })
+    console.log("after plus counter= ", this.state.count);
+  }
 
-Members.defaultProps = {
-  gen: 0
-}
+  handleMinus = () => {
+    console.log("current counter= ", this.state.count);
+    const currentCount = this.state.count;
+    this.setState({count: currentCount - 1 })
+    console.log("after minus counter= ", this.state.count);
+  }
 
-Members.propTypes = {
-  name: PropTypes.string.isRequired,
-  gen: PropTypes.number
-}
-
-class profile {
-  constructor(name, gen) {
-    this.name = name;
-    this.gen = gen;
+  render() {
+    return (
+      <div>
+        <div>counter: {this.state.count}</div>
+        <button onClick={this.handlePlus}>+1</button>
+        <button onClick={this.handleMinus}>-1</button>
+      </div>
+    )
   }
 }
 
 function App() {
-  let profiles = [];
-  profiles.push(new profile("Suisei"));
-  profiles.push(new profile("Fubuki", 1));
-  profiles.push(new profile("Ayame", 2));
-  profiles.push(new profile("Polka", 5));
-
-  return (
-    <div>
-      {
-        profiles.map((profile, index) => {
-          return <Members name={profile.name} gen={profile.gen} key={index} />
-        })
-      }
-    </div>
-  );
+  return <Counter></Counter>
 }
 
 export default App;
